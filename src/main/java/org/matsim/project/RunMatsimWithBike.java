@@ -7,6 +7,7 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.HasPlansAndId;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.config.groups.PlansCalcRouteConfigGroup;
 import org.matsim.core.config.groups.QSimConfigGroup;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
@@ -21,13 +22,14 @@ public class RunMatsimWithBike {
     public static void main(String[] args) {
 
         Config config;
-        if ( args==null || args.length==0 || args[0]==null ){
-            config = ConfigUtils.loadConfig( "scenarios/equil/config.xml" );
+        if (args == null || args.length == 0 || args[0] == null) {
+            config = ConfigUtils.loadConfig("scenarios/equil/config.xml");
         } else {
             System.out.println("laoding config from: " + args[0]);
             config = ConfigUtils.loadConfig(args);
         }
         config.controler().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
+        config.plansCalcRoute().setAccessEgressType(PlansCalcRouteConfigGroup.AccessEgressType.accessEgressModeToLink);
 
         config.qsim().setTrafficDynamics(QSimConfigGroup.TrafficDynamics.kinematicWaves);
         config.qsim().setSnapshotStyle(QSimConfigGroup.SnapshotStyle.kinematicWaves);
@@ -52,19 +54,16 @@ public class RunMatsimWithBike {
                 Id.createLinkId(9)
         );
 
-           /*  for (Link link : scenario.getNetwork().getLinks().values()) {
+        for (Link link : scenario.getNetwork().getLinks().values()) {
 
             // the original network has different lengths set eucledean length for our example
             link.setLength(CoordUtils.calcEuclideanDistance(link.getFromNode().getCoord(), link.getToNode().getCoord()));
 
-       if (innerLinks.contains(link.getId())) {
+            if (innerLinks.contains(link.getId())) {
                 link.setAllowedModes(Set.of(TransportMode.bike));
-            }
-            else {
+            } else {
                 link.setAllowedModes(Set.of(TransportMode.car, TransportMode.bike));
             }
-
-
         }
 
         // remove routes from legs, since the network has changed
@@ -73,7 +72,7 @@ public class RunMatsimWithBike {
                 .flatMap(plan -> TripStructureUtils.getLegs(plan).stream())
                 .forEach(leg -> leg.setRoute(null));
 
- */
+
         Controler controler = new Controler(scenario);
 
         // possibly modify controler here

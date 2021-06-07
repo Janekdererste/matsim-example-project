@@ -40,10 +40,10 @@
 			<param name="teleportedModeSpeed" value="1.1111111111111112"/>
 		</parameterset>
 		<parameterset type="teleportedModeParameters">
-			<param name="beelineDistanceFactor" value="1.4"/>
+			<param name="beelineDistanceFactor" value="null"/>
 			<param name="mode" value="bike"/>
-			<param name="teleportedModeFreespeedFactor" value="null"/>
-			<param name="teleportedModeSpeed" value="3.0555555555555554"/>
+			<param name="teleportedModeFreespeedFactor" value="3"/>
+			<param name="teleportedModeSpeed" value="null"/>
 		</parameterset>
 	</module>
 

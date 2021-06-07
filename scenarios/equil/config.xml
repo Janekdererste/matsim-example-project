@@ -18,7 +18,7 @@
 	<module name="controler">
 		<param name="outputDirectory" value="./output" />
 		<param name="firstIteration" value="0" />
-		<param name="lastIteration" value="10" />
+		<param name="lastIteration" value="20" />
 	</module>
 
 	<module name="qsim">
@@ -27,6 +27,24 @@
 		<param name="endTime" value="00:00:00" />
 	
 		<param name = "snapshotperiod"	value = "00:00:00"/> <!-- 00:00:00 means NO snapshot writing -->
+		<param name="mainMode" value="car"/>
+	</module>
+
+	<module name="planscalcroute">
+		<param name="networkModes" value="car"/>
+		<param name="clearDefaultTeleportedModeParams" value="false"/>
+		<parameterset type="teleportedModeParameters">
+			<param name="beelineDistanceFactor" value="1.4"/>
+			<param name="mode" value="walk"/>
+			<param name="teleportedModeFreespeedFactor" value="null"/>
+			<param name="teleportedModeSpeed" value="1.1111111111111112"/>
+		</parameterset>
+		<parameterset type="teleportedModeParameters">
+			<param name="beelineDistanceFactor" value="1.4"/>
+			<param name="mode" value="bike"/>
+			<param name="teleportedModeFreespeedFactor" value="null"/>
+			<param name="teleportedModeSpeed" value="3.0555555555555554"/>
+		</parameterset>
 	</module>
 
 	<module name="planCalcScore">
@@ -57,11 +75,25 @@
 	<module name="strategy">
 		<param name="maxAgentPlanMemorySize" value="5" /> <!-- 0 means unlimited -->
 
-		<param name="ModuleProbability_1" value="0.9" />
-		<param name="Module_1" value="BestScore" />
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="BestScore"/>
+			<param name="weight" value="0.7"/>
+		</parameterset>
 
-		<param name="ModuleProbability_2" value="0.1" />
-		<param name="Module_2" value="ReRoute" />
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="ReRoute"/>
+			<param name="weight" value="0.1"/>
+		</parameterset>
+
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="SubtourModeChoice"/>
+			<param name="weight" value="0.2"/>
+		</parameterset>
+	</module>
+
+	<module name="subtourModeChoice">
+		<param name="chainBasedModes" value="car,bike"/>
+		<param name="modes" value="car,bike"/>
 	</module>
 
 </config>
